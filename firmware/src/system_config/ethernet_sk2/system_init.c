@@ -111,9 +111,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // Section: Driver Initialization Data
 // *****************************************************************************
 // *****************************************************************************
-
-//<editor-fold defaultstate="collapsed" desc="DRV_USB Initialization Data">
-
+// <editor-fold defaultstate="collapsed" desc="DRV_USB Initialization Data">
 /******************************************************
  * USB Driver Initialization
  ******************************************************/
@@ -207,7 +205,7 @@ void SYS_Initialize ( void* data )
 {
   /* Core Processor Initialization */
   SYS_CLK_Initialize( NULL );
-  sysObj.sysDevcon = SYS_DEVCON_Initialize(SYS_DEVCON_INDEX_0, (SYS_MODULE_INIT*)&sysDevconInit);
+    SYS_DEVCON_Initialize(SYS_DEVCON_INDEX_0, (SYS_MODULE_INIT*)NULL);
   SYS_DEVCON_PerformanceConfig(SYS_CLK_SystemFrequencyGet());
   SYS_DEVCON_JTAGDisable();
   SYS_PORTS_Initialize();
@@ -220,6 +218,8 @@ void SYS_Initialize ( void* data )
     sysObj.drvUSBObject = DRV_USBFS_Initialize(DRV_USBFS_INDEX_0, (SYS_MODULE_INIT *) &drvUSBInit);
 
   /* Initialize System Services */
+
+    /*** Interrupt Service Initialization Code ***/
   SYS_INT_Initialize();
 
   /* Initialize Middleware */

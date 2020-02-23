@@ -2,7 +2,7 @@
  System Interrupts File
 
   File Name:
-    system_int.c
+    system_interrupt.c
 
   Summary:
     Raw ISR definitions.
@@ -53,15 +53,13 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
  *******************************************************************************/
 // DOM-IGNORE-END
 
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
 
-#include <xc.h>
-#include <sys/attribs.h>
+#include "system/common/sys_common.h"
 #include "app.h"
 #include "system_definitions.h"
 
@@ -70,19 +68,13 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // Section: System Interrupt Vector Functions
 // *****************************************************************************
 // *****************************************************************************
-	
-	
-	
-void __ISR(_USB_1_VECTOR, ipl4AUTO) _IntHandlerUSBInstance0(void)
-{
-
-    DRV_USBFS_Tasks_ISR(sysObj.drvUSBObject);
-            
-}
-
 
  
+void __ISR(_USB_1_VECTOR, ipl4AUTO) _IntHandlerUSBInstance0(void)
+{
+    DRV_USBFS_Tasks_ISR(sysObj.drvUSBObject);
+}
+
 /*******************************************************************************
  End of File
 */
-

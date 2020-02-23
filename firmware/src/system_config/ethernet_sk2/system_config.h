@@ -17,8 +17,8 @@
     definitions (or include any files that do).  It only provides macro
     definitions for build-time configuration options that are not instantiated
     until used by another MPLAB Harmony module or application.
-    
-    Created with MPLAB Harmony Version 1.06
+
+    Created with MPLAB Harmony Version 2.04
 *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
@@ -49,13 +49,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #ifndef _SYSTEM_CONFIG_H
 #define _SYSTEM_CONFIG_H
 
-/* This is a temporary workaround for an issue with the peripheral library "Exists"
-   functions that causes superfluous warnings.  It "nulls" out the definition of
-   The PLIB function attribute that causes the warning.  Once that issue has been
-   resolved, this definition should be removed. */
-#define _PLIB_UNSUPPORTED
-
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files
@@ -64,20 +57,27 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 /*  This section Includes other configuration headers necessary to completely
     define this configuration.
 */
+#include "bsp.h"
 
-#include "bsp_config.h"
+
+// DOM-IGNORE-BEGIN
+#ifdef __cplusplus  // Provide C++ Compatibility
+
+extern "C" {
+
+#endif
+// DOM-IGNORE-END
 
 // *****************************************************************************
 // *****************************************************************************
 // Section: System Service Configuration
 // *****************************************************************************
 // *****************************************************************************
-
 // *****************************************************************************
 /* Common System Service Configuration Options
 */
-#define SYS_VERSION_STR           "1.06"
-#define SYS_VERSION               10600
+#define SYS_VERSION_STR           "2.04"
+#define SYS_VERSION               20400
 
 // *****************************************************************************
 /* Clock System Service Configuration Options
@@ -88,41 +88,47 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #define SYS_CLK_CONFIG_PRIMARY_XTAL         8000000ul
 #define SYS_CLK_CONFIG_SECONDARY_XTAL       0ul
    
+/*** Ports System Service Configuration ***/
+#define SYS_PORT_AD1PCFG        ~0xffdf
+#define SYS_PORT_CNPUE          0x98000
+#define SYS_PORT_CNEN           0x0
+#define SYS_PORT_A_TRIS         0xFFFF
+#define SYS_PORT_A_LAT          0x0000
+#define SYS_PORT_A_ODC          0x0000
+
+#define SYS_PORT_B_TRIS         0xFFDF
+#define SYS_PORT_B_LAT          0x0000
+#define SYS_PORT_B_ODC          0x0000
+
+#define SYS_PORT_C_TRIS         0xFFE1
+#define SYS_PORT_C_LAT          0x0000
+#define SYS_PORT_C_ODC          0x0000
+
+#define SYS_PORT_D_TRIS         0x23F8
+#define SYS_PORT_D_LAT          0x0000
+#define SYS_PORT_D_ODC          0x0000
+
+#define SYS_PORT_E_TRIS         0xFCFF
+#define SYS_PORT_E_LAT          0x0000
+#define SYS_PORT_E_ODC          0x0000
+
+#define SYS_PORT_F_TRIS         0xCEF8
+#define SYS_PORT_F_LAT          0x0000
+#define SYS_PORT_F_ODC          0x0000
+
+#define SYS_PORT_G_TRIS         0x0FFC
+#define SYS_PORT_G_LAT          0x0000
+#define SYS_PORT_G_ODC          0x0000
+
+
 /*** Interrupt System Service Configuration ***/
 #define SYS_INT                     true
-
-/*** Ports System Service Configuration ***/
-#define SYS_PORT_AD1PCFG        ~0xffff
-#define SYS_PORT_CNPUE          0x0
-#define SYS_PORT_CNEN           0x0
-
-#define SYS_PORT_C_TRIS         0xf000
-#define SYS_PORT_C_LAT          0x0
-#define SYS_PORT_C_ODC          0x0
-
-#define SYS_PORT_D_TRIS         0x23ff
-#define SYS_PORT_D_LAT          0x0
-#define SYS_PORT_D_ODC          0x0
-
-#define SYS_PORT_E_TRIS         0xff
-#define SYS_PORT_E_LAT          0x0
-#define SYS_PORT_E_ODC          0x0
-
-#define SYS_PORT_F_TRIS         0x38
-#define SYS_PORT_F_LAT          0x0
-#define SYS_PORT_F_ODC          0x0
-
-#define SYS_PORT_G_TRIS         0x3cc
-#define SYS_PORT_G_LAT          0x0
-#define SYS_PORT_G_ODC          0x0
-
 
 // *****************************************************************************
 // *****************************************************************************
 // Section: Driver Configuration
 // *****************************************************************************
 // *****************************************************************************
-
 
 // *****************************************************************************
 // *****************************************************************************
@@ -136,12 +142,11 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 /* Enables Device Support */
 #define DRV_USBFS_DEVICE_SUPPORT      true
 
-/* Disable Device Support */
+/* Disable Host Support */
 #define DRV_USBFS_HOST_SUPPORT      false
 
 /* Maximum USB driver instances */
 #define DRV_USBFS_INSTANCES_NUMBER    1
-
 
 /* Interrupt mode enabled */
 #define DRV_USBFS_INTERRUPT_MODE      true
@@ -154,6 +159,14 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 
 /*** USB Device Stack Configuration ***/
+
+
+
+
+
+
+
+
 
 
 /* The USB Device Layer will not initialize the USB Driver */
@@ -196,19 +209,56 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 
 
-
 // *****************************************************************************
 /* BSP Configuration Options
 */
 #define BSP_OSC_FREQUENCY 8000000
 
 
+// *****************************************************************************
+// *****************************************************************************
+// Section: Application Configuration
+// *****************************************************************************
+// *****************************************************************************
+/*** Application Defined Pins ***/
+
+/*** Functions for BSP_LED_1 pin ***/
+#define BSP_LED_1Toggle() PLIB_PORTS_PinToggle(PORTS_ID_0, PORT_CHANNEL_D, PORTS_BIT_POS_0)
+#define BSP_LED_1On() PLIB_PORTS_PinSet(PORTS_ID_0, PORT_CHANNEL_D, PORTS_BIT_POS_0)
+#define BSP_LED_1Off() PLIB_PORTS_PinClear(PORTS_ID_0, PORT_CHANNEL_D, PORTS_BIT_POS_0)
+#define BSP_LED_1StateGet() PLIB_PORTS_PinGetLatched(PORTS_ID_0, PORT_CHANNEL_D, PORTS_BIT_POS_0)
+
+/*** Functions for BSP_LED_2 pin ***/
+#define BSP_LED_2Toggle() PLIB_PORTS_PinToggle(PORTS_ID_0, PORT_CHANNEL_D, PORTS_BIT_POS_1)
+#define BSP_LED_2On() PLIB_PORTS_PinSet(PORTS_ID_0, PORT_CHANNEL_D, PORTS_BIT_POS_1)
+#define BSP_LED_2Off() PLIB_PORTS_PinClear(PORTS_ID_0, PORT_CHANNEL_D, PORTS_BIT_POS_1)
+#define BSP_LED_2StateGet() PLIB_PORTS_PinGetLatched(PORTS_ID_0, PORT_CHANNEL_D, PORTS_BIT_POS_1)
+
+/*** Functions for BSP_LED_3 pin ***/
+#define BSP_LED_3Toggle() PLIB_PORTS_PinToggle(PORTS_ID_0, PORT_CHANNEL_D, PORTS_BIT_POS_2)
+#define BSP_LED_3On() PLIB_PORTS_PinSet(PORTS_ID_0, PORT_CHANNEL_D, PORTS_BIT_POS_2)
+#define BSP_LED_3Off() PLIB_PORTS_PinClear(PORTS_ID_0, PORT_CHANNEL_D, PORTS_BIT_POS_2)
+#define BSP_LED_3StateGet() PLIB_PORTS_PinGetLatched(PORTS_ID_0, PORT_CHANNEL_D, PORTS_BIT_POS_2)
+
+/*** Functions for BSP_SWITCH_3 pin ***/
+#define BSP_SWITCH_3StateGet() PLIB_PORTS_PinGet(PORTS_ID_0, PORT_CHANNEL_D, PORTS_BIT_POS_13)
+
+/*** Functions for BSP_SWITCH_1 pin ***/
+#define BSP_SWITCH_1StateGet() PLIB_PORTS_PinGet(PORTS_ID_0, PORT_CHANNEL_D, PORTS_BIT_POS_6)
+
+/*** Functions for BSP_SWITCH_2 pin ***/
+#define BSP_SWITCH_2StateGet() PLIB_PORTS_PinGet(PORTS_ID_0, PORT_CHANNEL_D, PORTS_BIT_POS_7)
 
 
+/*** Application Instance 0 Configuration ***/
 
+//DOM-IGNORE-BEGIN
+#ifdef __cplusplus
+}
+#endif
+//DOM-IGNORE-END
 
 #endif // _SYSTEM_CONFIG_H
 /*******************************************************************************
  End of File
 */
-

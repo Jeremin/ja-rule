@@ -13,6 +13,38 @@
             <asminc-extensions/>
             <sourceEncoding>ISO-8859-1</sourceEncoding>
             <make-dep-projects/>
+            <sourceRootList>
+                <sourceRootElem>../src</sourceRootElem>
+                <sourceRootElem>../../linker</sourceRootElem>
+                <sourceRootElem>../../common</sourceRootElem>
+                <sourceRootElem>../src/system_config/number8</sourceRootElem>
+                <sourceRootElem>../src/system_config/ethernet_sk2</sourceRootElem>
+                <sourceRootElem>../../boardcfg/ethernet_sk2</sourceRootElem>
+                <sourceRootElem>../../boardcfg/number8</sourceRootElem>
+                <sourceRootElem>../../boardcfg/default</sourceRootElem>
+                <sourceRootElem>../../boardcfg/number1</sourceRootElem>
+                <sourceRootElem>../src/system_config/number1</sourceRootElem>
+                <sourceRootElem>/opt/microchip/harmony/v1_06</sourceRootElem>
+                <sourceRootElem>../../microchip/harmony/v2_04</sourceRootElem>
+                <sourceRootElem>../src/ethernet_sk2</sourceRootElem>
+            </sourceRootList>
+            <confList>
+                <confElem>
+                    <name>ethernet_sk2</name>
+                    <type>2</type>
+                </confElem>
+                <confElem>
+                    <name>number8</name>
+                    <type>2</type>
+                </confElem>
+                <confElem>
+                    <name>number1</name>
+                    <type>2</type>
+                </confElem>
+            </confList>
+            <formatting>
+                <project-formatting-style>false</project-formatting-style>
+            </formatting>
         </data>
     </configuration>
 </project>

@@ -45,7 +45,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
  *******************************************************************************/
 // DOM-IGNORE-END
 
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files
@@ -73,7 +72,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 void SYS_Tasks ( void )
 {
     /* Maintain system services */
-    SYS_DEVCON_Tasks(sysObj.sysDevcon);
 
     /* Maintain Device Drivers */
 
@@ -86,7 +84,6 @@ void SYS_Tasks ( void )
     /* USB Device layer tasks routine */ 
     USB_DEVICE_Tasks(sysObj.usbDevObject0);
  
-
 
     /* Maintain the application's state machine. */
     APP_Tasks();
